@@ -2,6 +2,7 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import io.javalin.Javalin
+import io.javalin.plugin.bundled.CorsPluginConfig
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -22,9 +23,11 @@ class Main : CliktCommand() {
             ignoreUnknownKeys = true
         }
 
-        val app = Javalin.create()
-            .post("/polygons") { ctx ->
-                println("ooooo")
+        val app = Javalin.create{config ->
+            config.plugins.enableCors{ cors ->
+                cors.add(CorsPluginConfig::anyHost)
+            }
+        }.post("/polygons") { ctx ->
                 println(ctx.body())
                 val req = json.decodeFromString<DTO.GET>(ctx.body())
                 val polys = footprintsGeo.geoPolygons
