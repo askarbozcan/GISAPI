@@ -24,8 +24,8 @@ class Main : CliktCommand() {
         }
 
         val app = Javalin.create{config ->
-            config.plugins.enableCors{ cors ->
-                cors.add(CorsPluginConfig::anyHost)
+            config.plugins.enableCors { cors ->
+                cors.add {it.anyHost()}
             }
         }.post("/polygons") { ctx ->
                 println(ctx.body())
