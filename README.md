@@ -12,6 +12,10 @@ Two endpoints exist:
 
 ---
 
+GET `http://localhost:7123/amenities`: Lists all amenity types
+
+---
+
 POST `http://localhost:7123/polygons`
 
 To use it, send a POST request with a body similar to this:
@@ -147,5 +151,4 @@ You will receive a GeoJSON response similar to this:
 
 
 ```
----
-GET `http://localhost:7123/amenities`: Lists all amenity types
+
