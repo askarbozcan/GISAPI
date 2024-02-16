@@ -1,15 +1,18 @@
-### Fake GIS Project API
-Simple REST API simulating the real API for front-end development purposes.
-
+### GIS Project API
+GIS API for U. Konstanz Proj
 ## Installation
 1. Clone the repository
 2. cd into the project directory
-3. Run `docker build -t fake-gis-api .` to build the docker image
-4. Run `docker run -p 7123:7123 fake-gis-api` to run the docker container
+3. Run `docker build -t gis-api .` to build the docker image
+4. Run `docker run -p 7123:7123 gis-api` to run the docker container
 
 ## Usage
 The API is available at `http://localhost:7123/`
-One endpoint exists: `http://localhost:7123/polygons`
+Two endpoints exist: 
+
+---
+
+POST `http://localhost:7123/polygons`
 
 To use it, send a POST request with a body similar to this:
 ```json
@@ -136,8 +139,13 @@ You will receive a GeoJSON response similar to this:
             "height":2.0
          },
          "type":"Feature"
+
       }
    ],
    "type":"FeatureCollection"
 }
+
+
 ```
+---
+GET `http://localhost:7123/amenities`: Lists all amenity types
