@@ -20,8 +20,8 @@ data class PolyGeoJson(
 
     @Serializable
     data class Properties(
+        val missingAmenities: List<String>,
         val score: Double,
-        val height: Double = -1.0,
     )
 }
 
@@ -35,12 +35,13 @@ data class PolyCollectionGeoJson(
         fun fromListOfBuildingAmenitiesDTO(buaDtos: List<BuildingsAmenitiesDTO>, selectedAmenities: Set<String>): PolyCollectionGeoJson {
             val features = buaDtos.map { dto ->
                 val score = dto.amenities.intersect(selectedAmenities).size.toDouble() / selectedAmenities.size
+                val missingAmenities = selectedAmenities.minus(dto.amenities).toList()
                 val coordinates = (0 until dto.buildingWay.numPoints()).map { i ->
                     val point = dto.buildingWay.getPoint(i)
                     listOf(point.x, point.y)
                 }
                 val geometry = PolyGeoJson.Geometry(listOf(coordinates))
-                val properties = PolyGeoJson.Properties(score, 0.0)
+                val properties = PolyGeoJson.Properties(missingAmenities, score)
                 PolyGeoJson(geometry, properties)
             }
             return PolyCollectionGeoJson(features)
